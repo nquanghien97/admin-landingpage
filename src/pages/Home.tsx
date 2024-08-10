@@ -1,0 +1,13 @@
+import withAuth from '../hocs/withAuth'
+
+function Home() {
+  return (
+    <div className='text-center py-20'>
+      <h1 className="text-4xl text-black">Đây là trang quản trị</h1>
+    </div>
+  )
+}
+
+const HomeWithAuth = withAuth(Home)
+
+export default HomeWithAuth
