@@ -4,4 +4,4 @@ export interface HandbookEntity {
   imageUrl: string;
   content: string;
   createdAt: Date;
-}
+};
