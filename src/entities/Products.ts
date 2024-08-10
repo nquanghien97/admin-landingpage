@@ -9,4 +9,4 @@ export interface ProductEntity {
   }[];
   description: string;
   details: string;
-}
+}    

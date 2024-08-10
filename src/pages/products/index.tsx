@@ -20,7 +20,7 @@ function Products() {
   const [data, setData] = useState<ProductEntity[]>([]);
   const [paging, setPaging] = useState({
     page: 1,
-    pageSize: 2,
+    pageSize: 4,
     total: 10
   })
   const [refreshKey, setRefreshKey] = useState(false);
