@@ -10,5 +10,9 @@ export const MenuSidebar = [
   {
     title: 'Cẩm nang',
     path: 'cam-nang'
+  },
+  {
+    title: 'Nhân viên',
+    path: 'nhan-vien'
   }
 ]

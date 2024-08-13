@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Products from "../pages/products";
 import Feedback from "../pages/feedback";
 import Handbook from "../pages/handbook";
+import Staff from "../pages/staff";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
         <Route path="/san-pham" element={<Products />} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/cam-nang" element={<Handbook />} />
+        <Route path="/nhan-vien" element={<Staff />} />
       </Route>
       {/* <Route path="/thay-doi-mat-khau" element={<ChangePasswordPage />} /> */}
     </>
