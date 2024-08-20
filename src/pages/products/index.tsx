@@ -24,7 +24,11 @@ function Products() {
     total: 10
   })
   const [refreshKey, setRefreshKey] = useState(false);
-  const [idProduct, setIdProduct] = useState(-1)
+  const [idProduct, setIdProduct] = useState(-1);
+
+  useEffect(() => {
+    document.title = "Sản phẩm"
+  }, []);
 
   const columns: TableColumnsType = [
     {

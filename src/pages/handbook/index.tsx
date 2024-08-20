@@ -23,7 +23,11 @@ function Handbook() {
     total: 10
   })
   const [refreshKey, setRefreshKey] = useState(false);
-  const [idHandbook, setIdHandbook] = useState(-1)
+  const [idHandbook, setIdHandbook] = useState(-1);
+
+  useEffect(() => {
+    document.title = "Cẩm nang"
+  }, []);
 
   const columns: TableColumnsType = [
     {

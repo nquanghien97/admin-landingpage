@@ -23,7 +23,11 @@ function Feedback() {
     total: 10
   })
   const [refreshKey, setRefreshKey] = useState(false);
-  const [idFeedback, setIdFeedback] = useState(-1)
+  const [idFeedback, setIdFeedback] = useState(-1);
+
+  useEffect(() => {
+    document.title = "Khách hàng"
+  }, []);
 
   const columns: TableColumnsType = [
     {

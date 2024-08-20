@@ -24,6 +24,10 @@ function Staff() {
   const [refreshKey, setRefreshKey] = useState(false);
   const [idStaff, setIdStaff] = useState(-1)
 
+  useEffect(() => {
+    document.title = "Nhân sự"
+  }, []);
+
   const columns: TableColumnsType = [
     {
       title: 'Tên nhân viên',
