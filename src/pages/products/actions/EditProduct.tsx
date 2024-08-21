@@ -21,7 +21,7 @@ function EditProduct(props: EditProductProps) {
   const { onClose, open, id, setRefreshKey } = props;
   const [form] = Form.useForm();
 
-  const [files, setFiles] = useState<string[]>([])
+  const [files, setFiles] = useState<File[]>([])
   const [description, setDescription] = useState('')
   const [details, setDetails] = useState('')
   const [loading, setLoading] = useState(false)
@@ -45,48 +45,23 @@ function EditProduct(props: EditProductProps) {
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target || !e.target.files) return;
     const newFiles = Array.from(e.target.files)
-    const fileReaders = newFiles.map(file => {
-      return new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-  
-        reader.onloadend = () => {
-          if (typeof reader.result === 'string') {
-            resolve(reader.result);
-          } else {
-            reject(new Error('Failed to read file'));
-          }
-        };
-  
-        reader.onerror = () => {
-          reject(new Error('Failed to read file'));
-        };
-  
-        reader.readAsDataURL(file); // Read file as data URL
-      });
-    });
-  
-    Promise.all(fileReaders)
-      .then(base64Strings => {
-        // Handle the Base64 strings, e.g., set them in state or upload to server
-        setFiles(Array.from(base64Strings));   // Assuming you want to save Base64 strings in state
-      })
-      .catch(error => {
-        console.error('Error converting files to Base64:', error);
-      });
+    try {
+      setFiles(newFiles)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   const onFinish = async (data: FormValues) => {
     setLoading(true);
-    const dataSubmit = {
-      name: data.name,
-      price: +data.price,
-      images: files || dataProduct?.images,
-      description,
-      details,
-      id
-    }
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('price', data.price.toString());
+    formData.append('description', description);
+    formData.append('details', details);
+    files.forEach(file => formData.append('file', file))
     try {
-      await updateProduct(dataSubmit)
+      await updateProduct(id, formData)
       onClose()
       setRefreshKey(pre => !pre)
       notification.success('Chỉnh sửa sản phẩm thành công');
@@ -142,7 +117,7 @@ function EditProduct(props: EditProductProps) {
                 >
                   {
                     files.map((file, index) => (
-                      <Image key={index} className="border-2 m-auto cursor-pointer" width={100} height={100} src={file} alt="preview avatar" />
+                      <Image key={index} className="border-2 m-auto cursor-pointer" width={100} height={100} src={URL.createObjectURL(file)} alt="preview avatar" />
                     ))
                   }
                 </Image.PreviewGroup>

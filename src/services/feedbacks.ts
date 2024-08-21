@@ -4,16 +4,16 @@ export function getFeedbacks({ page = 1, pageSize = 10 } : { page?: number, page
   return api.get(`/feedbacks?page=${page}&pageSize=${pageSize}`)
 }
 
-export function createFeedback({ title, imageUrl, content } : { title: string, imageUrl: string, content: string}) {
-  return api.post('feedbacks', { title, imageUrl, content })
+export function createFeedback(data: FormData) {
+  return api.post('feedbacks', data)
 }
 
 export function getFeedback(id: number) {
   return api.get(`/feedbacks/${id}`)
 }
 
-export function updateFeedback({ title, imageUrl, content, id } : { title: string, imageUrl?: string, content: string, id: number }) {
-  return api.put(`/feedbacks/${id}`, { title, imageUrl, content })
+export function updateFeedback(id: number, data: FormData) {
+  return api.put(`/feedbacks/${id}`, data)
 }
 
 export function deleteFeedback(id: number) {

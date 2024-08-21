@@ -45,7 +45,7 @@ function Feedback() {
           <div className="flex flex-wrap justify-center w-full py-4 gap-4">
             <Image.PreviewGroup
             >
-              <Image className="border-2 m-auto cursor-pointer" src={value} alt="preview avatar" />
+              <Image className="border-2 m-auto cursor-pointer" src={`${import.meta.env.VITE_URL}${value}`} alt="preview avatar" />
             </Image.PreviewGroup>
           </div>
         )

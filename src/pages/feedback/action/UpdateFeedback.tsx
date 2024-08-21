@@ -21,7 +21,7 @@ function UpdateFeedback(props: EditProductProps) {
 
   const [form] = Form.useForm();
 
-  const [file, setFile] = useState<string>('')
+  const [file, setFile] = useState<File>()
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
   const [dataFeedback, setDataFeedback] = useState<FeedbackEntity>()
@@ -41,47 +41,22 @@ function UpdateFeedback(props: EditProductProps) {
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target || !e.target.files) return;
-    const file = e.target.files[0];  // Get the first (and only) file
-
-    const fileReader = new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          resolve(reader.result);
-        } else {
-          reject(new Error('Failed to read file as string'));
-        }
-      };
-
-      reader.onerror = () => {
-        reject(new Error('Failed to read file'));
-      };
-
-      reader.readAsDataURL(file);  // Read the single file as a data URL
-    });
-
-
-    fileReader
-    .then(base64String => {
-      // Handle the Base64 string, e.g., set it in state or upload to server
-      setFile(base64String); // Assuming you want to save the Base64 string in state
-    })
-    .catch(error => {
-      console.error('Error converting file to Base64:', error);
-    });
+    const newFile = e.target.files[0]
+    try {
+      setFile(newFile)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   const onFinish = async (data: FormValues) => {
     setLoading(true);
-    const dataSubmit = {
-      title: data.title,
-      imageUrl: file || dataFeedback?.imageUrl,
-      content,
-      id
-    }
+    const formData = new FormData();
+    formData.append('name', data.title);
+    formData.append('content', content);
+    formData.append('file', file!)
     try {
-      await updateFeedback(dataSubmit)
+      await updateFeedback(id, formData)
       notification.success('Thêm Feedback thành công')
       onClose();
       setRefreshKey(pre => !pre)
@@ -92,8 +67,6 @@ function UpdateFeedback(props: EditProductProps) {
       setLoading(false);
     }
   }
-
-  if(!dataFeedback) return <div>Loading...</div>
 
   return (
     <Modal
@@ -130,18 +103,18 @@ function UpdateFeedback(props: EditProductProps) {
                 <Input type="file" className="py-2" onChange={onFileChange} />
               </Form.Item>
             </div>
-            {file.length !== 0 ? (
+            {file ? (
               <div className="flex flex-wrap justify-center w-full py-4 gap-4">
                 <Image.PreviewGroup
                 >
-                  <Image className="border-2 m-auto cursor-pointer" width={200} src={file} alt="preview avatar" />
+                  <Image className="border-2 m-auto cursor-pointer" width={200} src={URL.createObjectURL(file)} alt="preview avatar" />
                 </Image.PreviewGroup>
               </div>
             ) : (
               <div className="flex flex-wrap justify-center w-full py-4 gap-4 eee">
                 <Image.PreviewGroup
                 >
-                  <Image className="border-2 m-auto cursor-pointer" width={200} src={dataFeedback.imageUrl} alt="preview avatar" />
+                  <Image className="border-2 m-auto cursor-pointer" width={200} src={dataFeedback?.imageUrl} alt="preview avatar" />
                 </Image.PreviewGroup>
               </div>
             )}
@@ -172,7 +145,7 @@ function UpdateFeedback(props: EditProductProps) {
                   'bullist numlist outdent indent | table | forecolor | removeformat | media',
                 setup: (editor) => {
                   editor.on('init', () => {
-                    editor.setContent(dataFeedback.content)
+                    editor.setContent(dataFeedback?.content || '')
                   })
                 }
               }}

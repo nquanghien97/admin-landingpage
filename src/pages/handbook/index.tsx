@@ -45,7 +45,7 @@ function Handbook() {
           <div className="flex flex-wrap justify-center w-full py-4 gap-4">
             <Image.PreviewGroup
             >
-              <Image className="border-2 m-auto cursor-pointer" src={value} alt="preview avatar" />
+              <Image className="border-2 m-auto cursor-pointer" src={`${import.meta.env.VITE_URL}${value}`} alt="preview avatar" />
             </Image.PreviewGroup>
           </div>
         )
@@ -130,7 +130,7 @@ function Handbook() {
     <div className="h-full p-4">
       <div className="flex mb-4">
         <div className="m-auto">
-          <span className="px-6 p-2 rounded-full bg-[#0071BA] uppercase font-bold text-2xl">Quản lý Handbook</span>
+          <span className="px-6 p-2 rounded-full bg-[#0071BA] uppercase font-bold text-2xl">Quản lý Cẩm nang</span>
         </div>
         <div
           className="bg-[#0071ba] rounded-md cursor-pointer h-full px-4 py-2 flex items-center justify-center hover:opacity-80 duration-300 text-white"
