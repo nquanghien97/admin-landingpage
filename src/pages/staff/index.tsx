@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import PlusIcon from '../../assets/icons/PlusIcon'
-import { Button, Table, TableColumnsType, Image } from 'antd'
+import { Button, Table, TableColumnsType } from 'antd'
 import EditIcon from '../../assets/icons/EditIcon'
 import CloseIcon from '../../assets/icons/CloseIcon'
 import { StaffEntity } from '../../entities/Staff'
@@ -48,26 +48,6 @@ function Staff() {
       title: 'Tên ngân hàng',
       key: '3',
       dataIndex: 'bankName'
-    },
-    {
-      title: 'Hình ảnh',
-      key: '4',
-      dataIndex: 'imageUrl',
-      render(value) {
-        return (
-          value ? (
-            <div className="flex flex-wrap justify-center w-full py-4 gap-4">
-            <Image.PreviewGroup
-            >
-              <Image className="border-2 m-auto cursor-pointer" src={value} alt="preview avatar" />
-            </Image.PreviewGroup>
-          </div>
-          ) : (
-            <p>Không có hình ảnh</p>
-          )
-        )
-      },
-      width: 200
     },
     {
       title: 'Thao tác',

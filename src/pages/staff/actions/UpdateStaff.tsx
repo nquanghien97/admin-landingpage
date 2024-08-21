@@ -1,4 +1,4 @@
-import { Form, Input, Modal, Image, Select, Button } from 'antd'
+import { Form, Input, Modal, Select, Button } from 'antd'
 import { getStaff, updateStaff } from '../../../services/staff';
 import { useEffect, useState } from 'react';
 import { StaffEntity, StaffType } from '../../../entities/Staff';
@@ -34,7 +34,6 @@ function UpdateStaff(props: UpdateProductProps) {
   const { onClose, open, id, setRefreshKey } = props
   const [form] = Form.useForm();
 
-  const [file, setFile] = useState<string>()
   const [loading, setLoading] = useState(false)
   const [dataStaff, setDataStaff] = useState<StaffEntity>()
 
@@ -57,44 +56,10 @@ function UpdateStaff(props: UpdateProductProps) {
     })()
   }, [form, id]);
 
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target || !e.target.files) return;
-    const file = e.target.files[0];  // Get the first (and only) file
-
-    const fileReader = new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          resolve(reader.result);
-        } else {
-          reject(new Error('Failed to read file as string'));
-        }
-      };
-
-      reader.onerror = () => {
-        reject(new Error('Failed to read file'));
-      };
-
-      reader.readAsDataURL(file);  // Read the single file as a data URL
-    });
-
-
-    fileReader
-      .then(base64String => {
-        // Handle the Base64 string, e.g., set it in state or upload to server
-        setFile(base64String); // Assuming you want to save the Base64 string in state
-      })
-      .catch(error => {
-        console.error('Error converting file to Base64:', error);
-      });
-  }
-  console.log(file)
   const onFinish = async (data: FormValues) => {
     setLoading(true);
     const dataSubmit = {
       name: data.name,
-      imageUrl: file || undefined,
       identifier: data.identifier ? data.identifier : undefined,
       bankName: data.bankName ? data.bankName : undefined,
       bankNumber: data.bankNumber ? data.bankNumber : undefined,
@@ -168,32 +133,6 @@ function UpdateStaff(props: UpdateProductProps) {
                 >
                   <Input className="py-2" />
                 </Form.Item>
-              </div>
-              <div className="flex items-center flex-col">
-                <div className="flex items-center w-full h-full">
-                  <p className="w-[120px] text-left text-[#0071BA]">Hình ảnh</p>
-                  <Form.Item
-                    className="!mb-0 w-full"
-                    name="imageUrl"
-                  >
-                    <Input type="file" className="py-2" onChange={onFileChange} />
-                  </Form.Item>
-                </div>
-                {file ? (
-                  <div className="flex flex-wrap justify-center w-full py-4 gap-4">
-                    <Image.PreviewGroup
-                    >
-                      <Image className="border-2 m-auto cursor-pointer" width={200} src={file} alt="preview avatar" />
-                    </Image.PreviewGroup>
-                  </div>
-                ) : (
-                  <div className="flex flex-wrap justify-center w-full py-4 gap-4 eee">
-                    <Image.PreviewGroup
-                    >
-                      <Image className="border-2 m-auto cursor-pointer" width={200} src={dataStaff?.imageUrl} alt="preview avatar" />
-                    </Image.PreviewGroup>
-                  </div>
-                )}
               </div>
             </>
           )}
