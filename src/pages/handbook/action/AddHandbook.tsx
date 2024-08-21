@@ -17,7 +17,7 @@ interface FormValues {
 function AddHandbook(props: AddHandbookProps) {
   const { open, onClose, setRefreshKey } = props
 
-  const [file, setFile] = useState<string>('');
+  const [file, setFile] = useState<File>();
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -27,46 +27,22 @@ function AddHandbook(props: AddHandbookProps) {
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target || !e.target.files) return;
-    const file = e.target.files[0];  // Get the first (and only) file
-
-    const fileReader = new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        if (typeof reader.result === 'string') {
-          resolve(reader.result);
-        } else {
-          reject(new Error('Failed to read file as string'));
-        }
-      };
-
-      reader.onerror = () => {
-        reject(new Error('Failed to read file'));
-      };
-
-      reader.readAsDataURL(file);  // Read the single file as a data URL
-    });
-
-
-    fileReader
-    .then(base64String => {
-      // Handle the Base64 string, e.g., set it in state or upload to server
-      setFile(base64String); // Assuming you want to save the Base64 string in state
-    })
-    .catch(error => {
-      console.error('Error converting file to Base64:', error);
-    });
+    const newFile = e.target.files[0]
+    try {
+      setFile(newFile)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   const onFinish = async (data: FormValues) => {
     setLoading(true);
-    const dataSubmit = {
-      title: data.title,
-      imageUrl: file,
-      content
-    }
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('content', content);
+    formData.append('file', file!)
     try {
-      await createHandbook(dataSubmit)
+      await createHandbook(formData)
       notification.success('Thêm Cẩm nang thành công')
       onClose();
       setRefreshKey(pre => !pre)
@@ -123,7 +99,7 @@ function AddHandbook(props: AddHandbookProps) {
               <div className="flex flex-wrap justify-center w-full py-4 gap-4">
                 <Image.PreviewGroup
                 >
-                  <Image className="border-2 m-auto cursor-pointer" width={200} src={file} alt="preview avatar" />
+                  <Image className="border-2 m-auto cursor-pointer" width={200} src={URL.createObjectURL(file)} alt="preview avatar" />
                 </Image.PreviewGroup>
               </div>
             )}

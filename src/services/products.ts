@@ -4,16 +4,16 @@ export function getProducts({ page = 1, pageSize = 10 } : { page?: number, pageS
   return api.get(`/products?page=${page}&pageSize=${pageSize}`)
 }
 
-export function createProduct({ name, price, description, details, images } : { name: string, price: number, description: string, details: string, images: string[] }) {
-  return api.post('products', { name, price, description, details, images })
+export function createProduct(data: FormData) {
+  return api.post('products', data)
 }
 
 export function getProduct(id: number) {
   return api.get(`/products/${id}`)
 }
 
-export function updateProduct({ name, price, description, details, images, id } : { name: string, price: number, description: string, details: string, images: string[], id: number }) {
-  return api.put(`/products/${id}`, { name, price, description, details, images })
+export function updateProduct(id: number, data: FormData) {
+  return api.put(`/products/${id}`, data)
 }
 
 export function deleteProduct(id: number) {
