@@ -48,7 +48,7 @@ function Products() {
             >
               {
                 value.map((file, index) => (
-                  <Image key={index} className="border-2 m-auto cursor-pointer" width={100} height={100} src={`${import.meta.env.VITE_URL}${file.imageUrl}`} alt="preview avatar" />
+                  <Image key={index} className="border-2 m-auto cursor-pointer" width={100} height={100} src={`${import.meta.env.VITE_API_URL}${file.imageUrl}`} alt="preview avatar" />
                 ))
               }
             </Image.PreviewGroup>

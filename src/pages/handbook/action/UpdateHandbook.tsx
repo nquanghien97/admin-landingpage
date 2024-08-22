@@ -116,7 +116,7 @@ function UpdateHandbook(props: EditProductProps) {
               <div className="flex flex-wrap justify-center w-full py-4 gap-4 eee">
                 <Image.PreviewGroup
                 >
-                  <Image className="border-2 m-auto cursor-pointer" width={200} src={dataHandbook.imageUrl} alt="preview avatar" />
+                  <Image className="border-2 m-auto cursor-pointer" width={200} src={`${import.meta.env.VITE_API_URL}${dataHandbook.imageUrl}`} alt="preview avatar" />
                 </Image.PreviewGroup>
               </div>
             )}
