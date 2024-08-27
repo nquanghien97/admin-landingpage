@@ -52,17 +52,17 @@ function UpdateHandbook(props: EditProductProps) {
   const onFinish = async (data: FormValues) => {
     setLoading(true);
     const formData = new FormData();
-    formData.append('name', data.title);
+    formData.append('title', data.title);
     formData.append('content', content);
     formData.append('file', file!)
     try {
       await updateHandbook(id, formData)
-      notification.success('Thêm cẩm nang thành công')
+      notification.success('Sửa cẩm nang thành công')
       onClose();
       setRefreshKey(pre => !pre)
     } catch (err) {
       console.log(err)
-      notification.error('Thêm cẩm nang thất bại')
+      notification.error('Sửa cẩm nang thất bại')
     } finally {
       setLoading(false);
     }
@@ -77,7 +77,7 @@ function UpdateHandbook(props: EditProductProps) {
       className='!p-0 !w-4/6 !top-4'
       footer={false}
     >
-      <div className="w-full text-center p-3 h-[60px] leading-[36px] bg-[#0071BA] rounded-t-lg uppercase font-bold">Thêm sản phẩm</div>
+      <div className="w-full text-center p-3 h-[60px] leading-[36px] bg-[#0071BA] rounded-t-lg uppercase font-bold">Sửa sản phẩm</div>
       <div className="p-4">
         <Form form={form} className="flex flex-col gap-6" onFinish={onFinish}>
           <div className="flex items-center h-[40px]">
