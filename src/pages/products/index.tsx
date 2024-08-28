@@ -62,6 +62,11 @@ function Products() {
       key: 3
     },
     {
+      title: "Giá tiền giảm giá",
+      dataIndex: 'discountPrice',
+      key: 3
+    },
+    {
       title: "Mô tả",
       dataIndex: 'description',
       key: 4,

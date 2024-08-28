@@ -13,7 +13,8 @@ interface AddProductProps {
 
 interface FormValues {
   name: string;
-  price: number
+  price: number;
+  discountPrice: number;
 }
 
 function AddProduct(props: AddProductProps) {
@@ -42,6 +43,7 @@ function AddProduct(props: AddProductProps) {
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('price', data.price.toString());
+    formData.append('discountPrice', data.discountPrice.toString());
     formData.append('description', description);
     formData.append('details', details);
     files.forEach(file => formData.append('file', file))
@@ -117,6 +119,32 @@ function AddProduct(props: AddProductProps) {
             <Form.Item
               className="!mb-0 w-full"
               name="price"
+              rules={[
+                {
+                  required: true,
+                  message: "Trường này là bắt buộc"
+                },
+                () => ({
+                  validator(_, value) {
+                    if (!value) {
+                      return Promise.reject();
+                    }
+                    if (isNaN(value)) {
+                      return Promise.reject("Số phải là số");
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+              ]}
+            >
+              <Input className="py-2" />
+            </Form.Item>
+          </div>
+          <div className="flex items-center h-[40px]">
+            <p className="w-[120px] text-left text-[#0071BA]">Giá tiền giảm giá</p>
+            <Form.Item
+              className="!mb-0 w-full"
+              name="discountPrice"
               rules={[
                 {
                   required: true,
