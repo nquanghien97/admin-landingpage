@@ -170,10 +170,6 @@ function EditProduct(props: EditProductProps) {
               className="!mb-0 w-full"
               name="discountPrice"
               rules={[
-                {
-                  required: true,
-                  message: "Trường này là bắt buộc"
-                },
                 () => ({
                   validator(_, value) {
                     if (!value) {
