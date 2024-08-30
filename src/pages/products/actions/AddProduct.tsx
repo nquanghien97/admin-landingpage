@@ -14,7 +14,7 @@ interface AddProductProps {
 interface FormValues {
   name: string;
   price: number;
-  discountPrice: number;
+  discountPrice?: number;
 }
 
 function AddProduct(props: AddProductProps) {
@@ -43,7 +43,9 @@ function AddProduct(props: AddProductProps) {
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('price', data.price.toString());
-    formData.append('discountPrice', data.discountPrice.toString());
+    if(data.discountPrice) {
+      formData.append('discountPrice', data.discountPrice.toString());
+    }
     formData.append('description', description);
     formData.append('details', details);
     files.forEach(file => formData.append('file', file))
