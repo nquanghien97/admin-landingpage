@@ -169,20 +169,7 @@ function EditProduct(props: EditProductProps) {
             <Form.Item
               className="!mb-0 w-full"
               name="discountPrice"
-              rules={[
-                () => ({
-                  validator(_, value) {
-                    if (!value) {
-                      return Promise.reject();
-                    }
-                    if (isNaN(value)) {
-                      return Promise.reject("Số phải là số");
-                    }
-                    return Promise.resolve();
-                  },
-                }),
-              ]}
-              initialValue={dataProduct?.price}
+              initialValue={dataProduct?.discountPrice}
             >
               <Input className="py-2" />
             </Form.Item>

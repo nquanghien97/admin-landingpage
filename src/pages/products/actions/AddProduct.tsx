@@ -145,19 +145,6 @@ function AddProduct(props: AddProductProps) {
             <Form.Item
               className="!mb-0 w-full"
               name="discountPrice"
-              rules={[
-                () => ({
-                  validator(_, value) {
-                    if (!value) {
-                      return Promise.reject();
-                    }
-                    if (isNaN(value)) {
-                      return Promise.reject("Số phải là số");
-                    }
-                    return Promise.resolve();
-                  },
-                }),
-              ]}
             >
               <Input className="py-2" />
             </Form.Item>
