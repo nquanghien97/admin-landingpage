@@ -34,7 +34,7 @@ function Handbook() {
       title: "Tiêu đề",
       dataIndex: 'title',
       key: 1,
-      width: 300
+      width: 100
     },
     {
       title: "Hình ảnh",
@@ -49,15 +49,15 @@ function Handbook() {
             </Image.PreviewGroup>
           </div>
         )
-      }
+      },
+      width: 200
     },
     {
       title: "Nội dung",
       dataIndex: 'content',
       key: 5,
-      width: 300,
       render(value) {
-        return <div dangerouslySetInnerHTML={{ __html: value }} />
+        return <div className="px-4" dangerouslySetInnerHTML={{ __html: value }} />
       }
     },
     {
